@@ -1,13 +1,16 @@
 package com.dh.ecommerce.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Produto {
-    private String descricao;
+    private Long id;
+    private String nome;
     private Double valor;
+    private String lote;
+    private String categoria;
+    private String fornecedor;
 }

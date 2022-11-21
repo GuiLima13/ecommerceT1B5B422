@@ -1,12 +1,13 @@
 package com.dh.ecommerce.controller;
 
 import com.dh.ecommerce.model.Produto;
+import com.dh.ecommerce.model.dto.ProdutoDTO;
 import com.dh.ecommerce.service.ProdutoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/produto")
 public class ProdutoController {
@@ -30,11 +31,11 @@ public class ProdutoController {
     ProdutoService service = new ProdutoService();
 
     @GetMapping()
-    public List<Produto> buscarSegundo(){
+    public List<ProdutoDTO> buscarSegundo(){
         return service.buscar();
     }
     @PostMapping()
-    public Produto salvar(@RequestBody Produto produto){
+    public ResponseEntity salvar(@RequestBody Produto produto){
         System.out.println();
         return service.salvar(produto);
     }
