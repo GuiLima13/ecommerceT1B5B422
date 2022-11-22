@@ -4,8 +4,10 @@ import com.dh.ecommerce.dao.ProdutoDAO;
 import com.dh.ecommerce.model.Produto;
 import com.dh.ecommerce.model.dto.ProdutoDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLDataException;
 import java.sql.SQLException;
@@ -15,9 +17,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ProdutoService {
 
-    ProdutoDAO produtoDAO = new ProdutoDAO();
+    @Autowired
+    ProdutoDAO produtoDAO;
     public List<ProdutoDTO> buscar(){
         List<Produto> listProduto = produtoDAO.buscar();
         List<ProdutoDTO> listProdutoDTO = new ArrayList<>();

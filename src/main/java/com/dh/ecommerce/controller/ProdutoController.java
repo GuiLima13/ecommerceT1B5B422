@@ -3,9 +3,13 @@ package com.dh.ecommerce.controller;
 import com.dh.ecommerce.model.Produto;
 import com.dh.ecommerce.model.dto.ProdutoDTO;
 import com.dh.ecommerce.service.ProdutoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -29,7 +33,9 @@ public class ProdutoController {
 //        return "Entrou no primeiro get";
 //    }
 
-    ProdutoService service = new ProdutoService();
+    @Autowired
+    ProdutoService service;
+
 
     @GetMapping()
     public List<ProdutoDTO> buscarSegundo(){
