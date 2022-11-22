@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.sql.SQLDataException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +24,6 @@ public class ProdutoService {
         ObjectMapper mapper = new ObjectMapper();
         for (Produto produto : listProduto) {
             ProdutoDTO produtoDTO = mapper.convertValue(produto, ProdutoDTO.class);
-            System.out.println(produtoDTO.getCategoria());
             listProdutoDTO.add(produtoDTO);
         }
         return listProdutoDTO;
@@ -29,8 +31,9 @@ public class ProdutoService {
 
     public ResponseEntity salvar(Produto produto){
         try{
+            produto.setDataHoraCadastro(Timestamp.from(Instant.now()));
             Produto produtoSalvo = produtoDAO.salvar(produto);
-           return new ResponseEntity( "Produto "+produtoSalvo.getNome()+" criado com sucesso", HttpStatus.INTERNAL_SERVER_ERROR);
+           return new ResponseEntity( "Produto "+produtoSalvo.getNome()+" criado com sucesso", HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity("Erro ao cadastrar produto", HttpStatus.BAD_REQUEST);
         }

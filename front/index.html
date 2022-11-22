@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>FrontEcommerceDHAula</title>
+        <link href="style.css" rel="stylesheet">
+        <script src="salvar.js"></script>
+        <script src="buscar.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"><!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <form action="" class="p-5">
+            <h4>Cadastrar produto</h4>
+          
+            <div class="input-group mb-3">
+              <input id="nomeProduto" type="text" class="form-control" placeholder="Nome do Produto" aria-label="nomeProduto" aria-describedby="basic-addon1">
+              <input id="valorProduto" type="number" class="form-control" placeholder="Valor" aria-label="valor" aria-describedby="basic-addon2">
+            </div>
+          
+            <div class="input-group mb-3">
+              <input id="categoriaProduto" type="text" class="form-control" placeholder="Categoria" aria-label="categoria" aria-describedby="basic-addon1">
+              <input id="loteProduto" type="text" class="form-control" placeholder="Lote" aria-label="lote" aria-describedby="basic-addon2">
+              <input id="fornecedorProduto" type="text" class="form-control" placeholder="Fornecedor" aria-label="fornecedor" aria-describedby="basic-addon1">
+            </div>
+            <button onclick="salvarProduto()"  type="button" class="btn btn-primary ">Salvar</button>
+          </form>
+          
+          <div class="p-5 tabela-list">
+            <h4>Lista de produto</h4>
+            <table id="table-produto" class="table table-striped ">
+                <thead id="thead-produto">
+                    <tr>
+                        <th>Nome Produto</th>
+                        <th>Valor</th>
+                        <th>Lote</th>
+                        <th>Categoria</th>
+                        <th>Fornecedor</th>
+                      </tr>
+                </thead>              
+            </table>
+          </div>
+    </body>
+</html>

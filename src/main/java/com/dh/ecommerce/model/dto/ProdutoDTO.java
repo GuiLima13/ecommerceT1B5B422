@@ -7,6 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,9 +20,19 @@ import lombok.Setter;
 public class ProdutoDTO {
     private String nome;
     private Double valor;
-    @JsonIgnore
+    private Timestamp dataHoraCadastro;
+    private LocalDate dataCadastro;
+    private LocalTime horaCadastro;
     private String lote;
-    @JsonIgnore
+
     private String categoria;
     private String fornecedor;
+
+    public LocalDate getDataCadastro() {
+        return dataHoraCadastro.toLocalDateTime().toLocalDate();
+    }
+
+    public LocalTime getHoraCadastro() {
+        return dataHoraCadastro.toLocalDateTime().toLocalTime();
+    }
 }
