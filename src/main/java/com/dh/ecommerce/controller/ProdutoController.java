@@ -33,9 +33,12 @@ public class ProdutoController {
     @Autowired
     ProdutoService service;
 
-
+    @GetMapping("/buscarSKU/{sku}")
+    public ResponseEntity buscarPorNome(@PathVariable String sku){
+        return service.buscarPorSku(sku);
+    }
     @GetMapping()
-    public List<ProdutoDTO> buscarSegundo(){
+    public List<ProdutoDTO> buscar(){
         return service.buscar();
     }
     @PostMapping()

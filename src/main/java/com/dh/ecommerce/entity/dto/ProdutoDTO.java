@@ -18,18 +18,17 @@ import java.time.LocalTime;
 public class ProdutoDTO {
     private String nome;
     private Double valor;
+    private String sku;
     private Timestamp dataHoraCadastro;
     private LocalDate dataCadastro;
     private LocalTime horaCadastro;
-    private String lote;
 
+    private String lote;
     private String categoria;
     private String fornecedor;
-
     public LocalDate getDataCadastro() {
         return dataHoraCadastro.toLocalDateTime().toLocalDate();
     }
-
     public LocalTime getHoraCadastro() {
         return dataHoraCadastro.toLocalDateTime().toLocalTime();
     }

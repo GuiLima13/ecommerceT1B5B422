@@ -20,6 +20,8 @@ public class ProdutoService {
 
     @Autowired
     ProdutoRepository repository;
+
+
     public List<ProdutoDTO> buscar(){
         List<Produto> listProduto = repository.findAll();
         List<ProdutoDTO> listProdutoDTO = new ArrayList<>();
@@ -50,5 +52,15 @@ public class ProdutoService {
 //        repository.findById(id).orElseThrow(() -> new RuntimeException());
         repository.deleteById(id);
         return new ResponseEntity("Excluido com sucesso", HttpStatus.OK);
+    }
+
+    public ResponseEntity buscarPorSku(String sku) {
+        ObjectMapper mapper = new ObjectMapper();
+        Optional<Produto> produto = repository.findBySku(sku);
+        if(produto.isEmpty()){
+            return new ResponseEntity("Produto não encontrado", HttpStatus.BAD_REQUEST);
+        }
+        ProdutoDTO produtoDTO = mapper.convertValue(produto.get(), ProdutoDTO.class);
+        return new ResponseEntity(produtoDTO,HttpStatus.CREATED);
     }
 }
