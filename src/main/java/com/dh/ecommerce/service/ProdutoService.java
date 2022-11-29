@@ -1,5 +1,6 @@
 package com.dh.ecommerce.service;
 
+import com.dh.ecommerce.entity.Pedido;
 import com.dh.ecommerce.entity.Produto;
 import com.dh.ecommerce.entity.dto.ProdutoDTO;
 import com.dh.ecommerce.repository.ProdutoRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,9 +56,11 @@ public class ProdutoService {
         return new ResponseEntity("Excluido com sucesso", HttpStatus.OK);
     }
 
-    public ResponseEntity buscarPorSku(String sku) {
+    public ResponseEntity buscarPorSku(String sku,String nome) {
         ObjectMapper mapper = new ObjectMapper();
-        Optional<Produto> produto = repository.findBySku(sku);
+        Optional<Produto> produto = repository.buscaPorSkuAndNome(sku,nome);
+
+
         if(produto.isEmpty()){
             return new ResponseEntity("Produto não encontrado", HttpStatus.BAD_REQUEST);
         }

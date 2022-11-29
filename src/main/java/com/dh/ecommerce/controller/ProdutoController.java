@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -20,7 +21,7 @@ public class ProdutoController {
 //        return "Numero pedido: "+numPedido+ " nome usuario: "+nomeUsuario;
 //    }
 //    @GetMapping()
-//    public String buscar(@RequestParam("numPedido") int numPedido,
+//    public String buscar(@RequestParam(value = "numPedido", required = false) int numPedido,
 //                         @RequestParam("nomeUsuario") String nomeUsuario){
 //        return "Numero pedido: "+numPedido+ " nome usuario: "+nomeUsuario;
 //    }
@@ -33,16 +34,16 @@ public class ProdutoController {
     @Autowired
     ProdutoService service;
 
-    @GetMapping("/buscarSKU/{sku}")
-    public ResponseEntity buscarPorNome(@PathVariable String sku){
-        return service.buscarPorSku(sku);
+    @GetMapping("/buscarSKU/{sku}/{nome}")
+    public ResponseEntity buscarPorNome(@PathVariable String sku,@PathVariable String nome){
+        return service.buscarPorSku(sku,nome);
     }
     @GetMapping()
     public List<ProdutoDTO> buscar(){
         return service.buscar();
     }
     @PostMapping()
-    public ResponseEntity salvar(@RequestBody Produto produto){
+    public ResponseEntity salvar( @RequestBody @Valid Produto produto){
         System.out.println();
         return service.salvar(produto);
     }
