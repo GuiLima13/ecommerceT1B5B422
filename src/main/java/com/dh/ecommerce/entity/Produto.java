@@ -1,6 +1,7 @@
 package com.dh.ecommerce.entity;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Produto {
     private Long id;
 
     @NotBlank
+
     @Size(min = 5, max = 15,message = "Campo fora dos parametros")
     //Validações do banco
     @Column(nullable = false, unique = true)

@@ -52,8 +52,8 @@ public class ProdutoController {
         return service.deletar(id);
     }
     @PatchMapping()
-    public String alteracaoParcial(){
-        return "Entrou no  Patch";
+    public ResponseEntity alteracaoParcial(@RequestBody @Valid ProdutoDTO produtoDTO){
+        return service.alteracaoParcial(produtoDTO);
     }
     @PutMapping()
     public String alteracaoTotal(){

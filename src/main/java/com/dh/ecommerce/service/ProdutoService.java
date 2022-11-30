@@ -67,4 +67,32 @@ public class ProdutoService {
         ProdutoDTO produtoDTO = mapper.convertValue(produto.get(), ProdutoDTO.class);
         return new ResponseEntity(produtoDTO,HttpStatus.CREATED);
     }
+
+    public ResponseEntity alteracaoParcial(ProdutoDTO produtoDTO){
+        ObjectMapper mapper = new ObjectMapper();
+        Optional<Produto> produtoOptional = repository.findBySku(produtoDTO.getSku());
+        if(produtoOptional.isEmpty()){
+            return new ResponseEntity("O produto informado não existe",HttpStatus.NOT_FOUND);
+        }
+        Produto produto = produtoOptional.get();
+        if(produtoDTO.getNome() != null){
+            produto.setNome(produtoDTO.getNome());
+        }
+        if(produtoDTO.getCategoria() != null){
+            produto.setCategoria(produtoDTO.getCategoria());
+        }
+        if(produtoDTO.getLote() != null){
+            produto.setLote(produtoDTO.getLote());
+        }
+        if(produtoDTO.getFornecedor() != null){
+            produto.setFornecedor(produtoDTO.getFornecedor());
+        }
+        if(produtoDTO.getValor() != null){
+            produto.setValor(produtoDTO.getValor());
+        }
+
+        ProdutoDTO produtoAlterado = mapper.convertValue(repository.save(produto), ProdutoDTO.class);
+
+        return new ResponseEntity(produtoAlterado, HttpStatus.CREATED);
+    }
 }
