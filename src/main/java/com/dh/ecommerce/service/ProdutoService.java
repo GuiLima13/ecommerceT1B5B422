@@ -35,14 +35,11 @@ public class ProdutoService {
         return listProdutoDTO;
     }
 
-    public ResponseEntity salvar(Produto produto){
-        try{
+    public Produto salvar(Produto produto){
+
             produto.setDataHoraCadastro(Timestamp.from(Instant.now()));
             Produto produtoSalvo = repository.save(produto);
-           return new ResponseEntity( "Produto "+produtoSalvo.getNome()+" criado com sucesso", HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity("Erro ao cadastrar produto", HttpStatus.BAD_REQUEST);
-        }
+            return produtoSalvo;
     }
 
     public  ResponseEntity deletar(Long id){
@@ -68,11 +65,12 @@ public class ProdutoService {
         return new ResponseEntity(produtoDTO,HttpStatus.CREATED);
     }
 
-    public ResponseEntity alteracaoParcial(ProdutoDTO produtoDTO){
+    public ProdutoDTO alteracaoParcial(ProdutoDTO produtoDTO){
         ObjectMapper mapper = new ObjectMapper();
         Optional<Produto> produtoOptional = repository.findBySku(produtoDTO.getSku());
+        ProdutoDTO produtoAlterado = null;
         if(produtoOptional.isEmpty()){
-            return new ResponseEntity("O produto informado não existe",HttpStatus.NOT_FOUND);
+            return produtoAlterado;
         }
         Produto produto = produtoOptional.get();
         if(produtoDTO.getNome() != null){
@@ -91,8 +89,8 @@ public class ProdutoService {
             produto.setValor(produtoDTO.getValor());
         }
 
-        ProdutoDTO produtoAlterado = mapper.convertValue(repository.save(produto), ProdutoDTO.class);
+         produtoAlterado = mapper.convertValue(repository.save(produto), ProdutoDTO.class);
 
-        return new ResponseEntity(produtoAlterado, HttpStatus.CREATED);
+        return produtoAlterado;
     }
 }

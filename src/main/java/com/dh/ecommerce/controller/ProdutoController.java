@@ -4,6 +4,7 @@ import com.dh.ecommerce.entity.Produto;
 import com.dh.ecommerce.entity.dto.ProdutoDTO;
 import com.dh.ecommerce.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,8 +45,12 @@ public class ProdutoController {
     }
     @PostMapping()
     public ResponseEntity salvar( @RequestBody @Valid Produto produto){
-        System.out.println();
-        return service.salvar(produto);
+        try{
+            Produto produtoSalvo = service.salvar(produto);
+            return new ResponseEntity( "Produto "+produtoSalvo.getNome()+" criado com sucesso", HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity("Erro ao cadastrar produto", HttpStatus.BAD_REQUEST);
+        }
     }
     @DeleteMapping()
     public ResponseEntity deletar(@RequestParam("id") Long id){
@@ -53,7 +58,11 @@ public class ProdutoController {
     }
     @PatchMapping()
     public ResponseEntity alteracaoParcial(@RequestBody @Valid ProdutoDTO produtoDTO){
-        return service.alteracaoParcial(produtoDTO);
+        ProdutoDTO produtoDtoAlterado = service.alteracaoParcial(produtoDTO);
+        if(produtoDtoAlterado == null){
+            return new ResponseEntity("Erro ao alterar produto", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity("Produto alterado com sucesso", HttpStatus.OK);
     }
     @PutMapping()
     public String alteracaoTotal(){
