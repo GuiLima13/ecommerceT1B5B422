@@ -3,6 +3,7 @@ package com.dh.ecommerce.service;
 import com.dh.ecommerce.entity.Pedido;
 import com.dh.ecommerce.entity.Produto;
 import com.dh.ecommerce.entity.dto.ProdutoDTO;
+import com.dh.ecommerce.exception.ResourceNotFoundException;
 import com.dh.ecommerce.repository.ProdutoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,13 +54,14 @@ public class ProdutoService {
         return new ResponseEntity("Excluido com sucesso", HttpStatus.OK);
     }
 
-    public ResponseEntity buscarPorSku(String sku,String nome) {
+    public ResponseEntity buscarPorSku(String sku,String nome) throws ResourceNotFoundException {
         ObjectMapper mapper = new ObjectMapper();
         Optional<Produto> produto = repository.buscaPorSkuAndNome(sku,nome);
+       // Optional<Produto> produto = repository.buscaPorSkuAndNome(sku,nome).orElseThrow(() -> { new ResourceNotFoundException("Produto não encontrado");});
 
 
         if(produto.isEmpty()){
-            return new ResponseEntity("Produto não encontrado", HttpStatus.BAD_REQUEST);
+           throw new ResourceNotFoundException("Produto não encontrado");
         }
         ProdutoDTO produtoDTO = mapper.convertValue(produto.get(), ProdutoDTO.class);
         return new ResponseEntity(produtoDTO,HttpStatus.CREATED);

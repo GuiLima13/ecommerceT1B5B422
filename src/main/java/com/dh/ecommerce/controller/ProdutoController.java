@@ -2,6 +2,8 @@ package com.dh.ecommerce.controller;
 
 import com.dh.ecommerce.entity.Produto;
 import com.dh.ecommerce.entity.dto.ProdutoDTO;
+import com.dh.ecommerce.exception.CadastroInvalidoException;
+import com.dh.ecommerce.exception.ResourceNotFoundException;
 import com.dh.ecommerce.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +38,7 @@ public class ProdutoController {
     ProdutoService service;
 
     @GetMapping("/buscarSKU/{sku}/{nome}")
-    public ResponseEntity buscarPorNome(@PathVariable String sku,@PathVariable String nome){
+    public ResponseEntity buscarPorNome(@PathVariable String sku,@PathVariable String nome) throws ResourceNotFoundException {
         return service.buscarPorSku(sku,nome);
     }
     @GetMapping()
@@ -44,12 +46,12 @@ public class ProdutoController {
         return service.buscar();
     }
     @PostMapping()
-    public ResponseEntity salvar( @RequestBody @Valid Produto produto){
+    public ResponseEntity salvar( @RequestBody @Valid Produto produto) throws CadastroInvalidoException {
         try{
             Produto produtoSalvo = service.salvar(produto);
             return new ResponseEntity( "Produto "+produtoSalvo.getNome()+" criado com sucesso", HttpStatus.CREATED);
         }catch (Exception e){
-            return new ResponseEntity("Erro ao cadastrar produto", HttpStatus.BAD_REQUEST);
+            throw new CadastroInvalidoException("Erro ao cadastrar Produto");
         }
     }
     @DeleteMapping()

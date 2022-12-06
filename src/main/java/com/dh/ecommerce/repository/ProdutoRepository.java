@@ -14,6 +14,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     Optional<Produto> findBySku(String sku);
 
+
     Optional<Produto> findBySkuAndNome(String sku, String nome);
 
     @Query("SELECT p FROM Produto p WHERE p.sku = :sku and p.nome = :nome")
